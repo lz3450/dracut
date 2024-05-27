@@ -37,7 +37,7 @@ set -o pipefail
 
 usage() {
     [[ $sysroot_l ]] && dracutsysrootdir="$sysroot_l"
-    [[ $dracutbasedir ]] || dracutbasedir="$dracutsysrootdir"/usr/lib/dracut
+    [[ $dracutbasedir ]] || dracutbasedir="$dracutsysrootdir"@pkglibdir@
     if [[ -f $dracutbasedir/dracut-version.sh ]]; then
         # shellcheck source=./dracut-version.sh
         . "$dracutbasedir"/dracut-version.sh
@@ -63,7 +63,7 @@ EOF
 }
 
 long_usage() {
-    [[ $dracutbasedir ]] || dracutbasedir="$dracutsysrootdir"/usr/lib/dracut
+    [[ $dracutbasedir ]] || dracutbasedir="$dracutsysrootdir"@pkglibdir@
     if [[ -f $dracutbasedir/dracut-version.sh ]]; then
         # shellcheck source=./dracut-version.sh
         . "$dracutbasedir"/dracut-version.sh
@@ -293,7 +293,7 @@ EOF
 }
 
 long_version() {
-    [[ $dracutbasedir ]] || dracutbasedir="$dracutsysrootdir"/usr/lib/dracut
+    [[ $dracutbasedir ]] || dracutbasedir="$dracutsysrootdir"@pkglibdir@
     if [[ -f $dracutbasedir/dracut-version.sh ]]; then
         # shellcheck source=./dracut-version.sh
         . "$dracutbasedir"/dracut-version.sh
@@ -907,7 +907,7 @@ export DRACUT_LOG_LEVEL=warning
     debug=yes
 }
 
-[[ $dracutbasedir ]] || dracutbasedir="$dracutsysrootdir"/usr/lib/dracut
+[[ $dracutbasedir ]] || dracutbasedir="$dracutsysrootdir"@pkglibdir@
 
 # if we were not passed a config file, try the default one
 if [[ -z $conffile ]]; then
@@ -1062,7 +1062,7 @@ drivers_dir="${drivers_dir%"${drivers_dir##*[!/]}"}"
 [[ $use_fstab_l ]] && use_fstab=$use_fstab_l
 [[ $mdadmconf_l ]] && mdadmconf=$mdadmconf_l
 [[ $lvmconf_l ]] && lvmconf=$lvmconf_l
-[[ $dracutbasedir ]] || dracutbasedir="$dracutsysrootdir"/usr/lib/dracut
+[[ $dracutbasedir ]] || dracutbasedir="$dracutsysrootdir"@pkglibdir@
 [[ $fw_dir ]] || {
     fw_path_para=$(< /sys/module/firmware_class/parameters/path)
     fw_dir="${fw_path_para:+$dracutsysrootdir$fw_path_para:}$dracutsysrootdir/lib/firmware/updates/$kernel:$dracutsysrootdir/lib/firmware/updates:$dracutsysrootdir/lib/firmware/$kernel:$dracutsysrootdir/lib/firmware"

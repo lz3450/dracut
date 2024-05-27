@@ -27,3 +27,4 @@ test*.img
 /src/util/util
 /dracut-util
 .idea/
+/dracut

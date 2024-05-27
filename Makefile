@@ -50,7 +50,7 @@ manpages = $(man1pages) $(man5pages) $(man7pages) $(man8pages)
 
 .PHONY: install clean archive testimage test all check AUTHORS CONTRIBUTORS doc
 
-all: dracut.pc dracut-install src/skipcpio/skipcpio dracut-util
+all: dracut dracut.pc dracut-install src/skipcpio/skipcpio dracut-util
 
 %.o : %.c
 	$(CC) -c $(CFLAGS) $(CPPFLAGS) $(KMOD_CFLAGS) $< -o $@
@@ -149,13 +149,16 @@ dracut.pc: Makefile.inc Makefile
 	@echo "dracutmodulesdir=$(pkglibdir)/modules.d" >> dracut.pc
 	@echo "dracutconfdir=$(pkglibdir)/dracut.conf.d" >> dracut.pc
 
+dracut:
+	@sed -e 's|@pkglibdir@|$(pkglibdir)|g' dracut.sh > $@
+
 install: all
 	mkdir -p $(DESTDIR)$(pkglibdir)
 	mkdir -p $(DESTDIR)$(bindir)
 	mkdir -p $(DESTDIR)$(sysconfdir)
 	mkdir -p $(DESTDIR)$(pkglibdir)/modules.d
 	mkdir -p $(DESTDIR)$(mandir)/man1 $(DESTDIR)$(mandir)/man5 $(DESTDIR)$(mandir)/man7 $(DESTDIR)$(mandir)/man8
-	install -m 0755 dracut.sh $(DESTDIR)$(bindir)/dracut
+	install -m 0755 dracut $(DESTDIR)$(bindir)/dracut
 	install -m 0755 dracut-catimages.sh $(DESTDIR)$(bindir)/dracut-catimages
 	install -m 0755 lsinitrd.sh $(DESTDIR)$(bindir)/lsinitrd
 	install -m 0644 dracut.conf $(DESTDIR)$(sysconfdir)/dracut.conf
