@@ -1003,7 +1003,7 @@ if ! [[ $kernel ]]; then
     kernel=$(uname -r)
 fi
 
-DRACUT_PATH=${DRACUT_PATH:-/sbin /bin /usr/sbin /usr/bin}
+DRACUT_PATH=${DRACUT_PATH:-/sbin /bin /usr/sbin /usr/bin /usr/local/sbin /usr/local/bin}
 
 for i in $DRACUT_PATH; do
     rl=$i
